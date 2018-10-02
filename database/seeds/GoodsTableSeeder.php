@@ -6,6 +6,11 @@ use Illuminate\Database\Seeder,
 
 class GoodsTableSeeder extends Seeder
 {
+    const IMG_PATHS = [
+        'little' => 'http://api.textiloptom.net/exchange_data/img/small/',
+        'big' => 'http://api.textiloptom.net/exchange_data/img/large/'
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -13,26 +18,24 @@ class GoodsTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = Category::all()
-            ->get(['id', 'code']);
-        $categoriesArray = [];
-        foreach ($categories as $category) {
-            $categoriesArray[$category->id] = $category->code;
-        }
-//        $jsonRes = file_get_contents('http://pparket.ru/goodsapi.php');
-        $jsonRes = [];
+        $jsonRes = file_get_contents('http://api.textiloptom.net/v3/Api/productsExt.json?api_key=b984f4cd549a4536524e1bb238a583be');
         $data = json_decode($jsonRes);
         foreach ($data as $singleData) {
+            $pictures = []
+            foreach (self::IMG_PATHS as $size => $path) {
 
-            $moveResult = self::moveFileToServer($singleData->DETAIL_PICTURE['URL'], 'img.jpg');
-            if ($moveResult !== false) {
-                $image = new Image;
+                $moveResult = self::moveFileToServer($path, $singleData->img_name, $size);
+                if ($moveResult !== false) {
+                    $image = new Image();
 
-                $image->alt = $singleData->NAME . ' alt';
-                $image->title = $singleData->NAME . ' title';
-                $image->src = $moveResult;
+                    $image->alt = $singleData->NAME . ' alt';
+                    $image->title = $singleData->NAME . ' title';
+                    $image->src = $moveResult;
 
-                $image->save();
+                    $image->save();
+
+                    $pictures[$size] = $moveResult;
+                }
             }
 
             DB::table('goods')->insert([
@@ -64,10 +67,10 @@ class GoodsTableSeeder extends Seeder
      * @param $filename
      * @return bool|string
      */
-    static function moveFileToServer($url, $filename)
+    static function moveFileToServer($url, $filename, $size)
     {
-        $contents = file_get_contents($url);
-        $save_path = "/public/images/goods/" . $filename;
+        $contents = file_get_contents($url . $filename);
+        $save_path = "/public/images/goods/" . $size . '/' . $filename;
         if (file_put_contents($save_path, $contents) !== false) {
             return $save_path;
         }

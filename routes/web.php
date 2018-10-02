@@ -12,10 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/articles/{article_id}', 'ArticlesController@show');
 Route::get('/contacts', 'ContactsController@index');
+//Route::get('/catalog/delete', 'GoodsController@delete');
 Route::get('/catalog/{category_slug?}', 'GoodsController@index');
 Route::get('/catalog', 'GoodsController@index');
