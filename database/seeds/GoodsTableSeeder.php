@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Seeder,
     App\Category,
-    App\Image;
+    App\Image,
+    Illuminate\Support\Facades\Storage;
 
 class GoodsTableSeeder extends Seeder
 {
@@ -20,32 +21,62 @@ class GoodsTableSeeder extends Seeder
     {
         $jsonRes = file_get_contents('http://api.textiloptom.net/v3/Api/productsExt.json?api_key=b984f4cd549a4536524e1bb238a583be');
         $data = json_decode($jsonRes);
+        $imgArr = [];
+        $resTree = [];
+        $sectionsToSkip = [
+            128, 78, 117, 109, 185, 239, 191, 76, 8, 227, 3, 242, 11, 112
+        ];
+        $i = 0;
         foreach ($data as $singleData) {
-            $pictures = []
+            $i++;
+            if (in_array($singleData->catId, $sectionsToSkip) || $singleData->goods_count == 0) {
+                continue;
+            }
             foreach (self::IMG_PATHS as $size => $path) {
-
-                $moveResult = self::moveFileToServer($path, $singleData->img_name, $size);
-                if ($moveResult !== false) {
-                    $image = new Image();
-
-                    $image->alt = $singleData->NAME . ' alt';
-                    $image->title = $singleData->NAME . ' title';
-                    $image->src = $moveResult;
-
-                    $image->save();
-
-                    $pictures[$size] = $moveResult;
-                }
+                Storage::put('goods/' . $size . '/' . $singleData->img_name, file_get_contents($path . $singleData->img_name));
+                $imgArr[$i][$size] = Storage::url('goods/' . $size . '/' . $singleData->img_name);
             }
 
-            DB::table('goods')->insert([
-                'name' => $singleData->NAME,
-                'code' => self::translit($singleData->NAME),
-                'price' => (int)$singleData->PROPERTY_PRICE_VALUE,
-                'category_id' => array_search($singleData->IBLOCK_SECTION_ID, $categoriesArray),
-                'image_src' => $moveResult
-            ]);
+            $resTree[$singleData->article] =
+                [
+                  'name' => $singleData->article,
+                  'brand' => $singleData->brand,
+                  'textile' => $singleData->textile,
+                  'sheet' => $singleData->sheet,
+                  'base_color' => $singleData->base_color,
+                ];
+
+            if ($i == 5) {
+                die;
+            }
+
         }
+//        foreach ($data as $singleData) {
+//            $pictures = []
+//            foreach (self::IMG_PATHS as $size => $path) {
+//
+//                $moveResult = self::moveFileToServer($path, $singleData->img_name, $size);
+//                if ($moveResult !== false) {
+//                    $image = new Image();
+//
+//                    $image->alt = $singleData->NAME . ' alt';
+//                    $image->title = $singleData->NAME . ' title';
+//                    $image->src = $moveResult;
+//
+//                    $image->save();
+//
+//                    $pictures[$size] = $moveResult;
+//                }
+//            }
+//
+//            DB::table('goods')->insert([
+//                'name' => $singleData->NAME,
+//                'code' => self::translit($singleData->NAME),
+//                'price' => (int)$singleData->PROPERTY_PRICE_VALUE,
+//                'category_id' => array_search($singleData->IBLOCK_SECTION_ID, $categoriesArray),
+//                'image_src' => $moveResult
+//            ]);
+//        }
     }
 
     static function translit($s)
