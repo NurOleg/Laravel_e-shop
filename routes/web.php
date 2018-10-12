@@ -20,3 +20,5 @@ Route::get('/contacts', 'ContactsController@index');
 //Route::get('/catalog/delete', 'GoodsController@delete');
 Route::get('/catalog/{category_slug?}', 'GoodsController@index');
 Route::get('/catalog', 'GoodsController@index');
+Route::post('/catalog/catalogFilter', 'GoodsController@ajaxFilter');
+Route::post('/catalog/ajaxBasket', 'GoodsController@ajaxBasket');

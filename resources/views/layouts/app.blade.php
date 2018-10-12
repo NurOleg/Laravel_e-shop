@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <title>Home</title>
+    <title>{{ $title }}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
-    <!--===============================================================================================-->
+
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/themify/themify-icons.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/elegant-font/html-css/style.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animate/animate.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/css-hamburgers/hamburgers.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animsition/css/animsition.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/daterangepicker.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/slick/slick.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/noui/nouislider.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
-    <!--===============================================================================================-->
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="animsition">
 
@@ -38,10 +64,10 @@
 					</span>
 
                 {{--<div class="topbar-language rs1-select2">--}}
-                    {{--<select class="selection-1" name="time">--}}
-                        {{--<option>USD</option>--}}
-                        {{--<option>EUR</option>--}}
-                    {{--</select>--}}
+                {{--<select class="selection-1" name="time">--}}
+                {{--<option>USD</option>--}}
+                {{--<option>EUR</option>--}}
+                {{--</select>--}}
                 {{--</div>--}}
             </div>
         </div>
@@ -61,13 +87,14 @@
             <!-- Header Icon -->
             <div class="header-icons">
                 <a href="#" class="header-wrapicon1 dis-block">
-                    {{--<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">--}}
+                    <img src="{{ asset('images/icons/icon-header-01.png') }}" class="header-icon1" alt="ICON">
                 </a>
 
                 <span class="linedivide1"></span>
 
                 <div class="header-wrapicon2">
-                    {{--<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">--}}
+                    <img src="{{ asset('images/icons/icon-header-02.png') }}"
+                         class="header-icon1 js-show-header-dropdown" alt="ICON">
                     <span class="header-icons-noti">0</span>
 
                     <!-- Header cart noti -->
@@ -252,7 +279,7 @@
     </div>
 
     <!-- Menu Mobile -->
-    <div class="wrap-side-menu" >
+    <div class="wrap-side-menu">
         <nav class="side-menu">
             <ul class="main-menu">
                 <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
@@ -267,12 +294,12 @@
 								fashe@example.com
 							</span>
 
-                        <div class="topbar-language rs1-select2">
-                            <select class="selection-1" name="time">
-                                <option>USD</option>
-                                <option>EUR</option>
-                            </select>
-                        </div>
+                        {{--<div class="topbar-language rs1-select2">--}}
+                        {{--<select class="selection-1" name="time">--}}
+                        {{--<option>USD</option>--}}
+                        {{--<option>EUR</option>--}}
+                        {{--</select>--}}
+                        {{--</div>--}}
                     </div>
                 </li>
 
@@ -325,7 +352,6 @@
 </header>
 
 
-
 @yield('content')
 
 
@@ -339,7 +365,8 @@
 
             <div>
                 <p class="s-text7 w-size27">
-                    Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                    Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on
+                    (+1) 96 716 6879
                 </p>
 
                 <div class="flex-m p-t-30">
@@ -492,11 +519,12 @@
         </a>
 
         <div class="t-center s-text8 p-t-20">
-            Copyright © 2018 All rights reserved. | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            Copyright © 2018 All rights reserved. | This template is made with <i class="fa fa-heart-o"
+                                                                                  aria-hidden="true"></i> by <a
+                    href="https://colorlib.com" target="_blank">Colorlib</a>
         </div>
     </div>
 </footer>
-
 
 
 <!-- Back to top -->
@@ -508,30 +536,7 @@
 
 <!-- Container Selection1 -->
 <div id="dropDownSelect1"></div>
-
-<link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('fonts/themify/themify-icons.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('fonts/elegant-font/html-css/style.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/animate/animate.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/css-hamburgers/hamburgers.min.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/animsition/css/animsition.min.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/daterangepicker.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/slick/slick.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
+<div id="dropDownSelect2"></div>
 
 <!--===============================================================================================-->
 <script type="text/javascript" src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
@@ -544,7 +549,16 @@
         minimumResultsForSearch: 20,
         dropdownParent: $('#dropDownSelect1')
     });
+
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect2')
+    });
 </script>
+
+<script type="text/javascript" src="{{ asset('vendor/daterangepicker/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/daterangepicker/daterangepicker.js') }}"></script>
+
 <!--===============================================================================================-->
 <script type="text/javascript" src="{{ asset('vendor/slick/slick.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/slick-custom.js') }}"></script>
@@ -554,19 +568,58 @@
 <script type="text/javascript" src="{{ asset('vendor/lightbox2/js/lightbox.min.js') }}"></script>
 <!--===============================================================================================-->
 <script type="text/javascript" src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('js/ajax.js') }}"></script>
 <script type="text/javascript">
-    $('.block2-btn-addcart').each(function(){
-        var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-        $(this).on('click', function(){
-            swal(nameProduct, "is added to cart !", "success");
+    $('.block2-btn-addcart').each(function () {
+        var name = $(this).attr('data-name'),
+            article = $(this).attr('data-article');
+        $(this).on('click', function () {
+            var data = {},
+                options = {};
+            data['article'] = article;
+            data['name'] = name;
+            options['size'] = 'large';
+            ajaxBasket(data, options);
+
+            // swal(nameProduct, "is added to cart !", "success");
         });
     });
 
-    $('.block2-btn-addwishlist').each(function(){
+    $('.block2-btn-addwishlist').each(function () {
         var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-        $(this).on('click', function(){
+        $(this).on('click', function () {
             swal(nameProduct, "is added to wishlist !", "success");
         });
+    });
+</script>
+<script type="text/javascript" src="{{ asset('vendor/noui/nouislider.min.js') }}"></script>
+<script type="text/javascript">
+    /*[ No ui ]
+    ===========================================================*/
+    var filterBar = document.getElementById('filter-bar'),
+        minVal = document.getElementById('value-lower'),
+        maxVal = document.getElementById('value-upper'),
+        skipValues = [
+            minVal,
+            maxVal
+        ];
+    console.log(minVal);
+    console.log(maxVal);
+    noUiSlider.create(filterBar, {
+        start: [parseInt(minVal.innerHTML), parseInt(maxVal.innerHTML)],
+        connect: true,
+        range: {
+            'min': parseInt(minVal.innerHTML),
+            'max': parseInt(maxVal.innerHTML)
+        }
+    });
+
+    var prices = [];
+    filterBar.noUiSlider.on('change', function (values, handle) {
+        skipValues[handle].innerHTML = Math.round(values[handle]);
+        setTimeout(function () {
+            ajaxCall(values, true)
+        }, 1000);
     });
 </script>
 

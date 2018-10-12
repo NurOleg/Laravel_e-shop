@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder,
     App\Category,
     App\Image,
+    App\Good,
     Illuminate\Support\Facades\Storage;
 
 class GoodsTableSeeder extends Seeder
@@ -29,54 +30,83 @@ class GoodsTableSeeder extends Seeder
         $i = 0;
         foreach ($data as $singleData) {
             $i++;
-            if (in_array($singleData->catId, $sectionsToSkip) || $singleData->goods_count == 0) {
+            if (in_array($singleData->cat_id, $sectionsToSkip) || $singleData->count_goods == 0) {
                 continue;
             }
-            foreach (self::IMG_PATHS as $size => $path) {
-                Storage::put('goods/' . $size . '/' . $singleData->img_name, file_get_contents($path . $singleData->img_name));
-                $imgArr[$i][$size] = Storage::url('goods/' . $size . '/' . $singleData->img_name);
-            }
-
-            $resTree[$singleData->article] =
-                [
-                  'name' => $singleData->article,
-                  'brand' => $singleData->brand,
-                  'textile' => $singleData->textile,
-                  'sheet' => $singleData->sheet,
-                  'base_color' => $singleData->base_color,
-                ];
-
-            if ($i == 5) {
-                die;
-            }
-
-        }
-//        foreach ($data as $singleData) {
-//            $pictures = []
 //            foreach (self::IMG_PATHS as $size => $path) {
-//
-//                $moveResult = self::moveFileToServer($path, $singleData->img_name, $size);
-//                if ($moveResult !== false) {
-//                    $image = new Image();
-//
-//                    $image->alt = $singleData->NAME . ' alt';
-//                    $image->title = $singleData->NAME . ' title';
-//                    $image->src = $moveResult;
-//
-//                    $image->save();
-//
-//                    $pictures[$size] = $moveResult;
-//                }
-//            }
-//
-//            DB::table('goods')->insert([
-//                'name' => $singleData->NAME,
-//                'code' => self::translit($singleData->NAME),
-//                'price' => (int)$singleData->PROPERTY_PRICE_VALUE,
+//                Storage::disk('images')->put('goods/' . $size . '/' . $singleData->img_name, file_get_contents($path . $singleData->img_name));
+//                DB::table('images')->insert([
+//                'src' => Storage::url('goods/' . $size . '/' . $singleData->img_name),
+//                'entity' => Good::class,
+//                'element' => $singleData->article,
 //                'category_id' => array_search($singleData->IBLOCK_SECTION_ID, $categoriesArray),
 //                'image_src' => $moveResult
 //            ]);
+//                $imgArr[$singleData->article][$size] = Storage::disk('images')->url('goods/' . $size . '/' . $singleData->img_name);
+//            }
+//            dump($imgArr);die;
+
+            $resGoods[$singleData->article] =
+                [
+                  'name' => $singleData->name,
+                  'api_id' => $singleData->id,
+                  'brand' => $singleData->brand,
+                  'textile' => $singleData->textile,
+                  'filler' => $singleData->filler,
+                  'category_id' => $singleData->cat_id,
+//                  'sheet' => $singleData->sheet,
+                  'base_color' => $singleData->base_color,
+                ];
+            $resSKU[$singleData->article][] =
+                [
+                    'duvet' => $singleData->duvet,
+                    'api_id' => $singleData->id,
+                    'pillowcase' => $singleData->pillowcase,
+                    'sheet' => $singleData->sheet,
+//                    'size' => $singleData->size,
+                    'price' => $singleData->price,
+                    'article' => $singleData->article,
+                    'count' => $singleData->count_goods,
+                ];
+            echo $i;
+        }
+
+//        foreach ($imgArr as $article => $image) {
+//            foreach ($image as $size => $url) {
+//                DB::table('images')->insert([
+//                    'src' => $url,
+//                    'entity' => Good::class,
+//                    'element' => $article,
+//                ]);
+//            }
 //        }
+
+        foreach ($resGoods as $article => $info) {
+            DB::table('goods')->insert([
+                'article' => $article,
+                'name' => $info['name'],
+                'api_id' => $info['api_id'],
+                'brand' => $info['brand'],
+                'textile' => (is_null($info['textile'])) ? 0 : $info['textile'],
+                'category_id' => $info['category_id'],
+                'base_color' => (is_null($info['base_color'])) ? 0 : $info['base_color'],
+                'filler' => (is_null($info['filler'])) ? 0 : $info['filler'],
+            ]);
+        }
+
+        foreach ($resSKU as $article => $infoSKUarr) {
+            foreach ($infoSKUarr as $infoSKU) {
+                DB::table('sku')->insert([
+                    'article' => $article,
+                    'duvet' => $infoSKU['duvet'],
+                    'api_id' => $infoSKU['api_id'],
+                    'pillowcase' => $infoSKU['pillowcase'],
+                    'sheet' => $infoSKU['sheet'],
+                    'price' => $infoSKU['price'],
+                    'count' => $infoSKU['count'],
+                ]);
+            }
+        }
     }
 
     static function translit($s)

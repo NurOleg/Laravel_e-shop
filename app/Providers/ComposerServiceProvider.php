@@ -29,6 +29,8 @@ class ComposerServiceProvider extends ServiceProvider
 
             $view->catalogCategories = $catalogCategories;
         });
+
+        view()->share('title', 'CasaFlower E-shop');
     }
 
     /**
