@@ -41,7 +41,8 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="demo-checkbox">
-                                    <input type="checkbox" id="basic_checkbox_2" name="active" class="filled-in" checked />
+                                    <input type="checkbox" id="basic_checkbox_2" name="active" class="filled-in"
+                                           checked/>
                                     <label for="basic_checkbox_2">Активность</label>
                                 </div>
                                 <br>
@@ -137,16 +138,115 @@
                             </div>
                         </section>
 
-                        <h2>Торговые предложения</h2>
+                        <h2>Торговые предложения (Количество: {{ $good->skus->count() }})</h2>
+                        <script>var json = {!! $json !!}
+                            console.log(json);
+                        </script>
                         <section>
-                            <p>
-                                Morbi ornare tellus at elit ultrices id dignissim lorem elementum. Sed eget nisl at
-                                justo
-                                condimentum dapibus. Fusce eros justo, pellentesque non euismod ac, rutrum sed quam.
-                                Ut non mi tortor. Vestibulum eleifend varius ullamcorper. Aliquam erat volutpat.
-                                Donec diam massa, porta vel dictum sit amet, iaculis ac massa. Sed elementum dui
-                                commodo lectus sollicitudin in auctor mauris venenatis.
-                            </p>
+                            @foreach($good->skus as $sku)
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="header">
+                                            <h2>
+                                                Торговое предложение №{{ $sku->id }}
+                                                <small><b>Цена:</b> {{ $sku->price }} ₽</small>
+                                            </h2>
+                                            <ul class="header-dropdown m-r--5">
+                                                <li class="dropdown">
+                                                    <a href="javascript:void(0);" class="dropdown-toggle"
+                                                       data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                       aria-expanded="false">
+                                                        <i class="material-icons">more_vert</i>
+                                                    </a>
+                                                    <ul class="dropdown-menu pull-right">
+                                                        <li><a href="" data-toggle="modal"
+                                                               data-target="#largeModal" class="sku-edit"
+                                                               id="{{ $sku->id }}">Редактировать</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="body">
+                                            Quis pharetra a pharetra fames blandit. Risus faucibus velit Risus imperdiet
+                                            mattis neque volutpat, etiam lacinia netus dictum magnis per facilisi
+                                            sociosqu. Volutpat. Ridiculus nostra.
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="largeModalLabel"></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-xs-12">
+                                                <div id="duvet">
+                                                    <b>Одеяло</b>
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" value="" class="form-control"
+                                                                   placeholder="" disabled/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="pillowcase">
+                                                    <b>Наволочка</b>
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" value="" class="form-control"
+                                                                   placeholder="" disabled/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="sheet">
+                                                    <b>Простынь</b>
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" value="" class="form-control"
+                                                                   placeholder="" disabled/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="size">
+                                                    <b>Размер</b>
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" value="" class="form-control"
+                                                                   placeholder="" disabled/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="price">
+                                                    <b>Цена</b>
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" value="" class="form-control"
+                                                                   placeholder=""/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="count">
+                                                    <b>Количество товара</b>
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" value="" class="form-control"
+                                                                   placeholder="" disabled/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-link waves-effect">Сохранить</button>
+                                            <button type="button" class="btn btn-link waves-effect"
+                                                    data-dismiss="modal">Закрыть
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </section>
 
                         {{--<h2>Forth Step</h2>--}}
@@ -332,5 +432,22 @@
     <script src="{{ asset('adminpanel/plugins/tinymce/tinymce.js') }}"></script>
     <script src="{{ asset('adminpanel/js/pages/forms/basic-form-elements.js') }}"></script>
     <script src="{{ asset('adminpanel/js/pages/forms/form-wizard.js') }}"></script>
+    <script src="{{ asset('adminpanel/js/pages/ui/modals.js') }}"></script>
     <script src="{{ asset('adminpanel/js/pages/forms/editors.js') }}"></script>
+    <script src="{{ asset('adminpanel/js/pages/cards/basic.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.sku-edit').on('click', function (e) {
+                e.preventDefault();
+                var skuId = $(this).attr('id');
+                console.log(json[skuId]);
+                $.each(json[skuId], function (item, value) {
+                    if (value !== null && ($(".modal-body #" + item).length > 0)) {
+                        console.log('qqqq');
+                        $(".modal-body #" + item).find('input').val(value);
+                    }
+                });
+            });
+        });
+    </script>
 @stop
