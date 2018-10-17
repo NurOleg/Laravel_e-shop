@@ -20,11 +20,11 @@ class CreateGoodsTable extends Migration
             $table->string('name');
             $table->boolean('active')->default(1);
             $table->unsignedInteger('category_id');
-            $table->string('img_src');
-            $table->unsignedInteger('brand');
-            $table->unsignedInteger('base_color');
-            $table->unsignedInteger('filler');
-            $table->unsignedInteger('textile');
+            $table->string('brand')->nullable();
+            $table->string('base_color')->nullable();
+            $table->string('filler')->nullable();
+            $table->string('textile')->nullable();
+            $table->string('count_color')->nullable();
 //            $table->foreign('article')->references('article')->on('sku');
             $table->timestamps();
         });

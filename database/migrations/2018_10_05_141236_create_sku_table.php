@@ -17,11 +17,12 @@ class CreateSkuTable extends Migration
 //            $table->primary('unique_article');
             $table->increments('id');
             $table->unsignedInteger('api_id');
-            $table->string('duvet');
-            $table->string('pillowcase');
-            $table->string('sheet');
-            $table->string('size');
+            $table->string('duvet')->nullable();
+            $table->string('pillowcase')->nullable();
+            $table->string('sheet')->nullable();
+            $table->string('size')->nullable();
             $table->integer('price');
+            $table->integer('count');
             $table->string('article')->references('article')->on('goods');
             $table->timestamps();
         });

@@ -22,3 +22,24 @@ Route::get('/catalog/{category_slug?}', 'GoodsController@index');
 Route::get('/catalog', 'GoodsController@index');
 Route::post('/catalog/catalogFilter', 'GoodsController@ajaxFilter');
 Route::post('/catalog/ajaxBasket', 'GoodsController@ajaxBasket');
+Route::get('/catalog/detail/{good_article}', 'GoodsController@detail');
+
+
+// ----------------------- Admin -------------------------------------//
+
+
+Route::get('/admin/good/{good_article}', 'admin\GoodsController@edit');
+
+
+//Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function()
+//{
+//    Route::get('/', function (){
+//       return view('admin.auth');
+//    });
+//    Route::get('dashboard', function() {
+//        echo 'qqqqqqqqq';
+//    } );
+//});
+//Auth::routes();
+//
+//Route::get('/home', 'HomeController@index')->name('home');

@@ -16,6 +16,19 @@ use Illuminate\Http\Request,
 
 class GoodsController extends Controller
 {
+    const PARAM_NAMES = [
+        'pillowcase' => 'Наволочка',
+        'duvet' => 'Одеяло',
+        'sheet' => 'Простынь',
+        'price' => 'Цена',
+        'count' => 'Количество товара',
+        'size' => 'Размер',
+        'brand' => 'Производитель',
+        'base_color' => 'Основной цвет',
+        'filler' => 'Наполнитель',
+        'textile' => 'Ткань',
+        'count_color' => 'Количество цветов',
+    ];
     /**
      * @param string $category_slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -77,6 +90,9 @@ class GoodsController extends Controller
         return view('catalog', ['categoriesTree' => $categoriesChildListForTree, 'goods' => $goods, 'filter' => $filter]);
     }
 
+    /**
+     * @param Request $request
+     */
     public function ajaxFilter(Request $request)
     {
 
@@ -108,6 +124,9 @@ class GoodsController extends Controller
 //        echo response()->json(['result' => 'success', 'result' => $resultHtml]);
     }
 
+    /**
+     * @param Request $request
+     */
     public function ajaxBasket(Request $request)
     {
         $article = $request->get('data')['data']['article'];
@@ -120,5 +139,21 @@ class GoodsController extends Controller
         } else {
             echo response()->json(['result' => 'error', 'data' => 'Что-то пошло не так']);
         }
+    }
+
+    /**
+     * @param string $good_article
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function detail(string $good_article)
+    {
+        $good = Good::findOrFail($good_article);
+        $title = $good->name;
+        $good['skus'] = $good->skus()->get();
+        $good['image'] = $good->images()->where('entity', Good::class)->where('size', 'big')->get();
+
+        view()->share('title', $title);
+        return view('catalog_detail', ['good' => $good]);
+
     }
 }

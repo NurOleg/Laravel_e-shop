@@ -37,6 +37,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
 
+    <script type="text/javascript" src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="animsition">
@@ -539,7 +541,6 @@
 <div id="dropDownSelect2"></div>
 
 <!--===============================================================================================-->
-<script type="text/javascript" src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/bootstrap/js/popper.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
