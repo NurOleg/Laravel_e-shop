@@ -36,12 +36,37 @@ window.ajaxBasket = function (data, options, count = 1) {
         },
         type: 'POST',
         url: '/catalog/ajaxBasket',
+        dataType:"json",
         data: {
             data: { data },
             options : { options },
             count: { count }
         },
         success: function (request) {
+            $('.header-icons-noti').html('').html(request.count);
+            console.log(request);
+        }
+    });
+}
+
+window.ajaxOrder = function (data, options, count = 1) {
+    console.log(data);
+    console.log(options);
+    console.log(count);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        url: '/catalog/ajaxBasket',
+        dataType:"json",
+        data: {
+            data: { data },
+            options : { options },
+            count: { count }
+        },
+        success: function (request) {
+            $('.header-icons-noti').html('').html(request.count);
             console.log(request);
         }
     });

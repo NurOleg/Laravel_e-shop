@@ -23,6 +23,8 @@ Route::get('/catalog', 'GoodsController@index');
 Route::post('/catalog/catalogFilter', 'GoodsController@ajaxFilter');
 Route::post('/catalog/ajaxBasket', 'GoodsController@ajaxBasket');
 Route::get('/catalog/detail/{good_article}', 'GoodsController@detail');
+Route::get('/personal/cart', 'OrderController@index');
+Route::post('/personal/saveOrder', 'OrderController@saveOrder');
 
 
 // ----------------------- Admin -------------------------------------//

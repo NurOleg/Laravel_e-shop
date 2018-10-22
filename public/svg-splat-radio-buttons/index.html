@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Splat Radio Buttons</title>
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 600 600" >
+    <defs>
+      <filter id="goo" height="300%" y="-100%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />
+
+      </filter>
+    </defs>
+    <g class="radioGroup" filter="url(#goo)">
+      <circle id="radio2" fill="#FFFFFF" cx="100" cy="400" r="12" />
+
+      <circle id="radio1" fill="#FFFFFF" cx="100" cy="325" r="12" />
+
+      <circle id="radio0" fill="#FFFFFF" cx="100" cy="250" r="12" />
+      <ellipse id="ring" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="10" cx="100" cy="250" rx="22" ry="22" />
+      <g id="clickLineGroup" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-miterlimit="10">
+        	<line x1="99" y1="250" x2="73.4" y2="188.1"/>
+        <line x1="99" y1="250" x2="124.5" y2="188.4"/>
+        <line x1="99" y1="250" x2="160.9" y2="224.4"/>
+        <line x1="99" y1="250" x2="160.6" y2="275.5"/>
+        <line x1="99" y1="250" x2="124.6" y2="311.9"/>
+        <line x1="99" y1="250" x2="73.5" y2="311.6"/>
+        <line x1="99" y1="250" x2="37.1" y2="275.6"/>
+        <line x1="99" y1="250" x2="37.4" y2="224.5"/>
+      </g>
+    </g>
+<g id="textGroup">
+    <text id="text0" fill="#FFFFFF" x="140" y="257">Splat - it's the new click!</text>
+    <text id="text1" fill="#FFFFFF" x="140" y="332">Gooey buttons are snazzy!</text>
+    <text id="text2" fill="#FFFFFF" x="140" y="407">Unlike (because I'm dead inside)</text>  
+    </g>
+
+
+  </svg>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js'></script>
+<script src='http://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/DrawSVGPlugin.js?r=12'></script>
+
+    <script src="js/index.js"></script>
+
+</body>
+</html>

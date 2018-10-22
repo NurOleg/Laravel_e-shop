@@ -97,7 +97,13 @@
                 <div class="header-wrapicon2">
                     <img src="{{ asset('images/icons/icon-header-02.png') }}"
                          class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">0</span>
+                    <span class="header-icons-noti">
+                        @if(\Illuminate\Support\Facades\Session::has('count'))
+                            {{ \Illuminate\Support\Facades\Session::get('count') }}
+                        @else
+                            0
+                        @endif
+                    </span>
 
                     <!-- Header cart noti -->
                     <div class="header-cart header-dropdown">
@@ -537,6 +543,7 @@
 </div>
 
 <!-- Container Selection1 -->
+
 <div id="dropDownSelect1"></div>
 <div id="dropDownSelect2"></div>
 
@@ -626,6 +633,8 @@
 
 <!--===============================================================================================-->
 <script src="{{ asset('js/main.js') }}"></script>
+
+@yield('specificJS')
 
 </body>
 </html>
