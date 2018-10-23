@@ -57,7 +57,7 @@ class GoodsController extends Controller
             $title = 'Casa Flower Каталог';
         }
         foreach ($goods as $good) {
-            $good['skus'] = $good->skus()->get();
+            $good['skus'] = $good->skus()->orderBy('price')->get();
             $good['image'] = $good->images()->where('entity', Good::class)->where('size', 'little')->get();
         }
         // ????????? -------
@@ -117,22 +117,28 @@ class GoodsController extends Controller
         $options = $request->get('options')['options'];
         $count = $request->get('count')['count'];
 
-        $sessionId = session()->getId();
+        $ip = \Request::ip();
+        if (Redis::get('cart:' . $ip . ':content')) {
+            foreach (json_decode(Redis::get('cart:' . $ip . ':content'), true) as $item) {
+                $qnt = $item['quantity'];
+                if ($item['id'] == $article) {
+                    $qnt = $item['quantity']++;
+                }
+                \Cart::session($ip)->add($item['id'], $item['name'], $item['price'], $qnt, $item['attributes']);
+            }
 
-//        $items = \Cart::session($sessionId)->getContent();
-//        if(!is_null($items))
-//        {
-//            foreach ($items as $item) {
-//                \Cart::session($sessionId)->add($item->id, $item->name, $item->price, $item->quantity, $item->attributes);
-//            }
-//        }
-        \Cart::session($sessionId)->add($article, $name, 1500, (int)$count, $options);
+        }
+        \Cart::session($ip)->add($article, $name, 1500, (int)$count, $options);
 
+        Redis::set('cart:' . $ip . ':content', \Cart::session($ip)->getContent());
+        Redis::set('cart:' . $ip . ':total', \Cart::session($ip)->getTotal());
+        Redis::set('cart:' . $ip . ':count', \Cart::session($ip)->getContent()->count());
         return response()
             ->json([
                 'result' => 'success',
-                'cart' => \Cart::session($sessionId)->getContent(),
-                'count' => \Cart::session($sessionId)->getContent()->count()
+                'cart' => Redis::get('cart:' . $ip . ':content'),
+                'total' => Redis::get('cart:' . $ip . ':total'),
+                'count' => Redis::get('cart:' . $ip . ':count')
             ]);
 
     }

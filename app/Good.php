@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Good extends Model
 {
+    const PROPERTIES_NAMES = [
+//        'pillowcase' => 'Наволочка',
+//        'duvet' => 'Одеяло',
+//        'sheet' => 'Простынь',
+//        'price' => 'Цена',
+//        'count' => 'Количество товара',
+//        'size' => 'Размер',
+        'brand' => 'Производитель',
+        'base_color' => 'Основной цвет',
+        'filler' => 'Наполнитель',
+        'textile' => 'Ткань',
+        'count_color' => 'Количество цветов',
+        'article' => 'Артикул',
+    ];
+
     protected $fillable = [
         'name', 'code', 'description', 'picture', 'price'
     ];

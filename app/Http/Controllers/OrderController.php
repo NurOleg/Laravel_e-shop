@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Shoppingcart;
 use Illuminate\Http\Request,
-    Illuminate\Session,
     App\Delivery,
     App\Payment,
     App\Order,
     App\User,
+    Darryldecode\Cart\CartCollection,
+    Illuminate\Support\Facades\Redis,
     Illuminate\Support\Facades\Auth,
     Illuminate\Support\Carbon;
 
@@ -22,12 +23,14 @@ class OrderController extends Controller
      */
     public function index()
     {
+//        dd(Auth::user());
         $items = [];
 
         $deliveries = Delivery::all();
         $payments = Payment::all();
         $sessionId = session()->getId();
-        $items = \Cart::session($sessionId)->getContent();
+        $ip = \Request::ip();
+        $items = new CartCollection(json_decode(Redis::get('cart:' . $ip . ':content')));
 
         $title = 'Оформление заказа';
         view()->share('title', $title);
@@ -36,7 +39,7 @@ class OrderController extends Controller
                 'deliveries' => $deliveries,
                 'payments' => $payments,
                 'items' => $items,
-                'total' => \Cart::session($sessionId)->getTotal()
+                'total' => Redis::get('cart:' . $ip . ':total')
             ]);
     }
 
@@ -46,6 +49,7 @@ class OrderController extends Controller
      */
     public function saveOrder(Request $request)
     {
+        $ip = \Request::ip();
         $errors = [];
         $data = $request->get('data');
 
@@ -68,8 +72,8 @@ class OrderController extends Controller
         // ------ add Cart -------- //
         $shoppingCart = new Shoppingcart;
 
-        $sessionId = session()->getId();
-        $shoppingCart->content = serialize(\Cart::session($sessionId)->getContent());
+        $shoppingCart->content = serialize(json_decode(Redis::get('cart:' . $ip . ':content')));
+        $shoppingCart->save();
 
         $cartId = $shoppingCart->id;
 
@@ -82,16 +86,18 @@ class OrderController extends Controller
 
         $order = new Order;
 
+        $adress = $data['zip-code'] . '/' . $data['city'] . ', ' . $data['street'] . ', ' . $data['house'];
+
+
         $order->code = Carbon::parse(Carbon::now())->format('dmY') . '/' . rand();
-
         $order->status = Order::ORDER_STATUS_NEW;
-
         $order->basket_id = $cartId;
         $order->user_id = $userId;
-        $order->delivery_id = $data['delivery_id'];
-        $order->payment_id = $data['payment_id'];
+        $order->delivery_id = $data['delivery'];
+        $order->payment_id = $data['payment'];
         $order->sum = $data['sum'];
-        $order->comment = $data['comment'];
+        $order->adress = $adress;
+        $order->comment = 'comment';
 
         $order->save();
 
@@ -100,7 +106,11 @@ class OrderController extends Controller
         }
 
         if (empty($errors)) {
-            redirect('/personal/order/' . $order->id);
+            \Cart::session($ip)->clear();
+            Redis::del('cart:' . $ip . ':content');
+            Redis::del('cart:' . $ip . ':total');
+            Redis::del('cart:' . $ip . ':count');
+            return redirect('/personal/order/order=' . $order->code);
         } else {
             return response()
                 ->json([

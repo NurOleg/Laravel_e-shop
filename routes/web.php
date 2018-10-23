@@ -29,19 +29,24 @@ Route::post('/personal/saveOrder', 'OrderController@saveOrder');
 
 // ----------------------- Admin -------------------------------------//
 
+Route::get('/admin', function (){
+    return view('admin.auth');
+});
 
-Route::get('/admin/good/{good_article}', 'admin\GoodsController@edit');
 
 
-//Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function()
-//{
-//    Route::get('/', function (){
-//       return view('admin.auth');
-//    });
-//    Route::get('dashboard', function() {
-//        echo 'qqqqqqqqq';
-//    } );
-//});
-//Auth::routes();
-//
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function()
+{
+    Route::get('goods', 'admin\GoodsController@show');
+    Route::get('goods/{good_article}', 'admin\GoodsController@edit');
+
+    Route::get('orders', 'admin\OrderController@show');
+
+
+    Route::get('dashboard', function() {
+        echo 'qqqqqqqqq';
+    });
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

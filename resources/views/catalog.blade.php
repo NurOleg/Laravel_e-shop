@@ -290,7 +290,37 @@
             </div>
         </div>
     </section>
+@endsection
 
+@section('specificJS')
+    <script type="text/javascript" src="{{ asset('vendor/noui/nouislider.min.js') }}"></script>
+    <script type="text/javascript">
+        /*[ No ui ]
+        ===========================================================*/
+        var filterBar = document.getElementById('filter-bar'),
+            minVal = document.getElementById('value-lower'),
+            maxVal = document.getElementById('value-upper'),
+            skipValues = [
+                minVal,
+                maxVal
+            ];
+        console.log(minVal);
+        console.log(maxVal);
+        noUiSlider.create(filterBar, {
+            start: [parseInt(minVal.innerHTML), parseInt(maxVal.innerHTML)],
+            connect: true,
+            range: {
+                'min': parseInt(minVal.innerHTML),
+                'max': parseInt(maxVal.innerHTML)
+            }
+        });
 
-
+        var prices = [];
+        filterBar.noUiSlider.on('change', function (values, handle) {
+            skipValues[handle].innerHTML = Math.round(values[handle]);
+            setTimeout(function () {
+                ajaxCall(values, true)
+            }, 1000);
+        });
+    </script>
 @endsection

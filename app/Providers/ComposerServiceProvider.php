@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Category,
     Illuminate\Support\Carbon,
     Illuminate\Support\Facades\Cache,
+    Illuminate\Support\Facades\Redis,
+    Darryldecode\Cart\CartCollection,
     Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -28,6 +30,19 @@ class ComposerServiceProvider extends ServiceProvider
             $catalogCategories = Cache::get('home_catalog_tree');
 
             $view->catalogCategories = $catalogCategories;
+        });
+
+        view()->composer('partials.header_cart', function ($view) {
+            $ip = \Request::ip();
+
+            $cart = json_decode(Redis::get('cart:' . $ip . ':content'));
+            $count = Redis::get('cart:' . $ip . ':count');
+            $total = Redis::get('cart:' . $ip . ':total');
+
+            $view->cart = $cart;
+            $view->total = $total;
+            $view->count = $count;
+
         });
 
         view()->share('title', 'CasaFlower E-shop');

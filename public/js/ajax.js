@@ -44,6 +44,7 @@ window.ajaxBasket = function (data, options, count = 1) {
         },
         success: function (request) {
             $('.header-icons-noti').html('').html(request.count);
+            $('.header-cart-total span').html('').html(request.total);
             console.log(request);
         }
     });

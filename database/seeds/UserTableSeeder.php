@@ -15,6 +15,8 @@ class UserTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('secret'),
+            'phone' => '+7(931) 341-79-59',
+            'admin' => 1,
         ]);
     }
 }

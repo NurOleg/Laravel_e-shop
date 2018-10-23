@@ -94,90 +94,7 @@
 
                 <span class="linedivide1"></span>
 
-                <div class="header-wrapicon2">
-                    <img src="{{ asset('images/icons/icon-header-02.png') }}"
-                         class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">
-                        @if(\Illuminate\Support\Facades\Session::has('count'))
-                            {{ \Illuminate\Support\Facades\Session::get('count') }}
-                        @else
-                            0
-                        @endif
-                    </span>
-
-                    <!-- Header cart noti -->
-                    <div class="header-cart header-dropdown">
-                        <ul class="header-cart-wrapitem">
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    {{--<img src="images/item-cart-01.jpg" alt="IMG">--}}
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        White Shirt With Pleat Detail Back
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-                                </div>
-                            </li>
-
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    {{--<img src="images/item-cart-02.jpg" alt="IMG">--}}
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        Converse All Star Hi Black Canvas
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-                                </div>
-                            </li>
-
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    {{--<img src="images/item-cart-03.jpg" alt="IMG">--}}
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        Nixon Porter Leather Watch In Tan
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <div class="header-cart-total">
-                            Total: $75.00
-                        </div>
-
-                        <div class="header-cart-buttons">
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    View Cart
-                                </a>
-                            </div>
-
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    Check Out
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('partials.header_cart')
             </div>
         </div>
     </div>
@@ -600,41 +517,11 @@
         });
     });
 </script>
-<script type="text/javascript" src="{{ asset('vendor/noui/nouislider.min.js') }}"></script>
-<script type="text/javascript">
-    /*[ No ui ]
-    ===========================================================*/
-    var filterBar = document.getElementById('filter-bar'),
-        minVal = document.getElementById('value-lower'),
-        maxVal = document.getElementById('value-upper'),
-        skipValues = [
-            minVal,
-            maxVal
-        ];
-    console.log(minVal);
-    console.log(maxVal);
-    noUiSlider.create(filterBar, {
-        start: [parseInt(minVal.innerHTML), parseInt(maxVal.innerHTML)],
-        connect: true,
-        range: {
-            'min': parseInt(minVal.innerHTML),
-            'max': parseInt(maxVal.innerHTML)
-        }
-    });
+@yield('specificJS')
 
-    var prices = [];
-    filterBar.noUiSlider.on('change', function (values, handle) {
-        skipValues[handle].innerHTML = Math.round(values[handle]);
-        setTimeout(function () {
-            ajaxCall(values, true)
-        }, 1000);
-    });
-</script>
 
 <!--===============================================================================================-->
 <script src="{{ asset('js/main.js') }}"></script>
-
-@yield('specificJS')
 
 </body>
 </html>

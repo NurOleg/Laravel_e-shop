@@ -5,9 +5,10 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request,
     App\Http\Controllers\Controller,
     App\Good,
-    App\Sku;
+    App\Sku,
+    App\Order;
 
-class GoodsController extends Controller
+class OrderController extends Controller
 {
     /**
      * @param string $good_article
@@ -27,12 +28,13 @@ class GoodsController extends Controller
 
     public function show()
     {
-        $goods = Good::all();
-        foreach ($goods as $good) {
-            $good['skus'] = $good->skus()->orderBy('price')->get();
-            $good['total'] = $good['skus']->sum('count');
+        $orders = Order::all();
+        foreach ($orders as $order) {
+            $order['delivery'] = $order->delivery();
+            $order['payment'] = $order->payment();
+            $order['cart'] = $order->basket();
         }
-
-        return view('admin.goods_show', ['goods' => $goods, 'props_good' => Good::PROPERTIES_NAMES, 'props_sku' => Sku::PROPERTIES_NAMES]);
+        dd($orders);
+        return view('admin.orders_show', ['orders' => $orders]);
     }
 }

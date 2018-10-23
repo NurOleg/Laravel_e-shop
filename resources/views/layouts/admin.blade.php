@@ -10,26 +10,29 @@
     <link rel="icon" href="{{ asset('adminpanel/favicon.ico') }}" type="image/x-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+          type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link href="{{ asset('adminpanel/plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="{{ asset('adminpanel/plugins/node-waves/waves.css') }}" rel="stylesheet" />
+    <link href="{{ asset('adminpanel/plugins/node-waves/waves.css') }}" rel="stylesheet"/>
 
     <!-- Animation Css -->
-    <link href="{{ asset('adminpanel/plugins/animate-css/animate.css') }}" rel="stylesheet" />
+    <link href="{{ asset('adminpanel/plugins/animate-css/animate.css') }}" rel="stylesheet"/>
 
     <!-- Morris Chart Css-->
-    <link href="{{ asset('adminpanel/plugins/morrisjs/morris.css') }}" rel="stylesheet" />
+    <link href="{{ asset('adminpanel/plugins/morrisjs/morris.css') }}" rel="stylesheet"/>
 
     <!-- Custom Css -->
     <link href="{{ asset('adminpanel/css/style.css') }}" rel="stylesheet">
 
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="{{ asset('adminpanel/css/themes/all-themes.css') }}" rel="stylesheet" />
+@yield('specificCSS')
+
+<!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="{{ asset('adminpanel/css/themes/all-themes.css') }}" rel="stylesheet"/>
 </head>
 
 <body class="theme-red">
@@ -68,14 +71,16 @@
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
+               data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a>
             <a class="navbar-brand" href="index.html">ADMINBSB - MATERIAL DESIGN</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <!-- Call Search -->
-                <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                <li><a href="javascript:void(0);" class="js-search" data-close="true"><i
+                                class="material-icons">search</i></a></li>
                 <!-- #END# Call Search -->
                 <!-- Notifications -->
                 <li class="dropdown">
@@ -203,7 +208,8 @@
                                             <small>32%</small>
                                         </h4>
                                         <div class="progress">
-                                            <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
+                                            <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100" style="width: 32%">
                                             </div>
                                         </div>
                                     </a>
@@ -215,7 +221,8 @@
                                             <small>45%</small>
                                         </h4>
                                         <div class="progress">
-                                            <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                            <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100" style="width: 45%">
                                             </div>
                                         </div>
                                     </a>
@@ -227,7 +234,8 @@
                                             <small>54%</small>
                                         </h4>
                                         <div class="progress">
-                                            <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
+                                            <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100" style="width: 54%">
                                             </div>
                                         </div>
                                     </a>
@@ -239,7 +247,8 @@
                                             <small>65%</small>
                                         </h4>
                                         <div class="progress">
-                                            <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                            <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100" style="width: 65%">
                                             </div>
                                         </div>
                                     </a>
@@ -251,7 +260,8 @@
                                             <small>92%</small>
                                         </h4>
                                         <div class="progress">
-                                            <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
+                                            <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85"
+                                                 aria-valuemin="0" aria-valuemax="100" style="width: 92%">
                                             </div>
                                         </div>
                                     </a>
@@ -264,7 +274,8 @@
                     </ul>
                 </li>
                 <!-- #END# Tasks -->
-                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i
+                                class="material-icons">more_vert</i></a></li>
             </ul>
         </div>
     </div>
@@ -276,10 +287,11 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="images/user.png" width="48" height="48" alt="User" />
+                <img src="images/user.png" width="48" height="48" alt="User"/>
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Хайдаров Джайсан</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Хайдаров Джайсан
+                </div>
                 <div class="email">jussy@example.com</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
@@ -315,7 +327,13 @@
                 <li>
                     <a href="pages/helper-classes.html">
                         <i class="material-icons">layers</i>
-                        <span>Helper Classes</span>
+                        <span>Категории</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/orders">
+                        <i class="material-icons">shopping_cart</i>
+                        <span>Заказы</span>
                     </a>
                 </li>
                 <li>

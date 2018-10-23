@@ -201,4 +201,58 @@
         $('.video-mo-01').css('opacity','0');
     });
 
+    /** Button in cart
+     *  on click scroll to next step
+     *  next step = second step
+     */
+    // $('.js-btn-step-two').click(function (event) {
+    //     event.preventDefault();
+    //     $('.js-cart-step-two').fadeIn();
+    //
+    //     $('html, body').animate({
+    //         scrollTop: $(".js-cart-step-two").offset().top - 80
+    //     }, 500);
+    // });
+
+    /** Validation */
+    $('input[type=tel]').mask('+7 (000) 000-00-00');
+    $('#orderForm').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
+            },
+            phone: {
+                required: true
+            }
+        },
+        messages: {
+            name: {
+                required: 'Поле "Имя" обязательно для заполнения',
+                minlength: jQuery.validator.format("Необхожимо заполнить как минимум {0} символа")
+            },
+            phone: {
+                required: 'Поле "Телефон" обязательно для заполнения, поле должно содержать номер формата +7 (XXX) XXX-XX-XX'
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent()).addClass('dis-block s-text3 m-b-15');
+        }
+    });
+
+    /** Submit form function
+    /** Button in cart on click check validation & scroll to next step
+     *  next step = second step
+     */
+    $('#orderForm').submit(function(evt) {
+        evt.preventDefault();
+
+        if($('#orderForm').valid()) {
+             $('.js-cart-step-two').fadeIn();
+
+             $('html, body').animate({
+                 scrollTop: $(".js-cart-step-two").offset().top - 80
+             }, 500);
+        }
+    });
 })(jQuery);
