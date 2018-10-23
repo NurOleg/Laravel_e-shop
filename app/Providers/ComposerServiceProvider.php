@@ -45,6 +45,18 @@ class ComposerServiceProvider extends ServiceProvider
 
         });
 
+        view()->composer('admin.partials.category_menu', function ($view) {
+            if (!Cache::has('admin_categories_tree')) {
+                $categoriesTree = Category::get()->toTree();
+                $expiresAt = Carbon::now()->addSeconds(1);
+                Cache::put('admin_categories_tree', $categoriesTree, $expiresAt);
+            }
+
+            $categoriesMenu = Category::get()->toTree();
+            $view->categoriesMenu = $categoriesMenu;
+
+        });
+
         view()->share('title', 'CasaFlower E-shop');
     }
 

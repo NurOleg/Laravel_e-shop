@@ -11,19 +11,18 @@ use Illuminate\Http\Request,
 class OrderController extends Controller
 {
     /**
-     * @param string $good_article
+     * @param int $order_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(string $good_article)
+    public function edit(int $order_id)
     {
-        $good = Good::findOrFail($good_article);
-        $good['skus'] = $good->skus()->get();
-        $good['image'] = $good->images()->where('entity', Good::class)->where('size', 'big')->get();
-        $json = [];
-        foreach ($good['skus'] as $sku) {
-            $json[$sku->id] = $sku;
-        }
-        return view('admin.good_edit', ['good' => $good, 'json' => json_encode($json, JSON_UNESCAPED_UNICODE)]);
+        $order = Order::findOrFail($order_id);
+        $order['delivery'] = $order->delivery();
+        $order['payment'] = $order->payment();
+        $order['user'] = $order->user();
+        $order['cart'] = unserialize($order->basketJson()[0]->content);
+
+        return view('admin.order_edit', ['order' => $order, 'props' => Order::ORDER_PROPERTIES]);
     }
 
     public function show()
@@ -32,9 +31,10 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $order['delivery'] = $order->delivery();
             $order['payment'] = $order->payment();
-            $order['cart'] = $order->basket();
+            $order['user'] = $order->user();
+            $order['cart'] = unserialize($order->basketJson()[0]->content);
         }
-        dd($orders);
-        return view('admin.orders_show', ['orders' => $orders]);
+
+        return view('admin.orders_show', ['orders' => $orders, 'props' => Order::ORDER_PROPERTIES]);
     }
 }

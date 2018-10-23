@@ -1,0 +1,2 @@
+INSERT INTO public.delivery (id, active, name, cost, description, created_at, updated_at) VALUES (1, true, 'Почта России', 300, 'Описание способа доставки Почта России', null, null);
+INSERT INTO public.delivery (id, active, name, cost, description, created_at, updated_at) VALUES (2, true, 'Курьером', 350, 'Описание способа доставки Курьером', null, null);

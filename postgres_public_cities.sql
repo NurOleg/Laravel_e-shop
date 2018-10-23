@@ -1,0 +1,2 @@
+INSERT INTO public.cities (id, title, code, created_at, updated_at) VALUES (5, 'Санкт-Петербург', 'spb', '2018-09-20 11:28:39', '2018-09-20 11:28:39');
+INSERT INTO public.cities (id, title, code, created_at, updated_at) VALUES (6, 'Москва', 'msk', '2018-09-20 11:28:39', '2018-09-20 11:28:39');

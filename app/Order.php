@@ -16,39 +16,50 @@ class Order extends Model
             self::ORDER_STATUS_CLOSED => 'Завершенный',
         ],
         'sum' => 'Сумма заказа',
-        'basket' => 'Корзина'
+        'basket' => 'Корзина',
+        'code' => 'Номер заказа',
+        'status' => 'Статус заказа',
+        'adress' => 'Адрес доставки'
     ];
     //
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function delivery()
     {
-        return $this->hasOne(Delivery::class, 'delivery_id');
+        return $this->hasOne(Delivery::class, 'id', 'delivery_id')->get();
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function payment()
     {
-        return $this->hasOne(Payment::class);
+        return $this->hasOne(Payment::class, 'id', 'payment_id')->get();
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'user_id')->get();
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return string
+     */
+    public function basketJson()
+    {
+        return $this->hasOne(Shoppingcart::class, 'id', 'basket_id')->select('content')->get();
+    }
+
+    /**
+     * @return array
      */
     public function basket()
     {
-        return $this->hasOne(Shoppingcart::class);
+        return unserialize($this->basketJson()[0]->content);
     }
 }

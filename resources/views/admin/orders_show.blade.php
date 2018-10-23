@@ -33,51 +33,30 @@
                         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                             <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Активность</th>
-                                <th>{{ $props_good['article'] }}</th>
-                                <th>{{ $props_good['brand'] }}</th>
-                                <th>{{ $props_sku['price'] }} от</th>
-                                <th>{{ $props_sku['price'] }} до</th>
-                                <th>{{ $props_sku['count'] }}</th>
+                                <th>ID</th>
+                                <th>{{ $props['code'] }}</th>
+                                <th>{{ $props['status'] }}</th>
+                                <th>{{ $props['sum'] }}</th>
+                                <th>{{ $props['adress'] }}</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Название</th>
-                                <th>Активность</th>
-                                <th>{{ $props_good['article'] }}</th>
-                                <th>{{ $props_good['brand'] }}</th>
-                                <th>{{ $props_sku['price'] }} от</th>
-                                <th>{{ $props_sku['price'] }} до</th>
-                                <th>{{ $props_sku['count'] }}</th>
+                                <th>ID</th>
+                                <th>{{ $props['code'] }}</th>
+                                <th>{{ $props['status'] }}</th>
+                                <th>{{ $props['sum'] }}</th>
+                                <th>{{ $props['adress'] }}</th>
                             </tr>
                             </tfoot>
                             <tbody>
-                            @foreach($goods as $good)
+                            @foreach($orders as $order)
                                 <tr>
-                                    <td><a href="goods/{{ $good->article }}">{{ $good->name }}</a></td>
-                                    <td>
-                                        @if($good->active === 1)
-                                            Да
-                                        @else
-                                            Нет
-                                        @endif
-                                    </td>
-                                    <td>{{ $good->article }}</td>
-                                    <td>{{ $good->brand }}</td>
-                                    @if($good['skus']->count() > 1)
-                                        @foreach($good['skus'] as $sku)
-                                            @if($loop->first || $loop->last)
-                                                <td>{{ $sku->price }}</td>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <td>{{ $sku->price }}</td>
-                                        <td>{{ $sku->price }}</td>
-                                    @endif
-
-                                    <td>{{ $good->total }}</td>
+                                    <td>{{ $order->id }}</td>
+                                    <td><a href="orders/{{ $order->id }}">{{ $order->code }}</a></td>
+                                    <td>{{ $props['statuses'][$order->status] }}</td>
+                                    <td>{{ $order->sum }}</td>
+                                    <td>{{ $order->adress }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

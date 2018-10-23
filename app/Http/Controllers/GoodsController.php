@@ -34,7 +34,11 @@ class GoodsController extends Controller
      */
     public function index(string $category_slug = '')
     {
-
+        foreach (Category::get()->toTree() as $i){
+            dump($i);
+        }
+        die;
+        dd(Category::get()->toTree());
 //        if (!Cache::has('catalog' . $category_slug)) {
         if (!empty($category_slug)) {
             $categoryCurrent = Category::where('category_slug', $category_slug)->limit(1)->get();
@@ -57,7 +61,7 @@ class GoodsController extends Controller
             $title = 'Casa Flower Каталог';
         }
         foreach ($goods as $good) {
-            $good['skus'] = $good->skus()->orderBy('price')->get();
+            $good['skus'] = $good->skus();
             $good['image'] = $good->images()->where('entity', Good::class)->where('size', 'little')->get();
         }
         // ????????? -------

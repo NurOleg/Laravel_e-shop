@@ -1,0 +1,1 @@
+INSERT INTO public.users (id, name, email, password, remember_token, created_at, updated_at, admin, phone) VALUES (1, 'admin', 'admin@gmail.com', '$2y$10$YqD1eGQQQ4y.D7mwPJdu2eiipBj56zm/ysvLNoGw2u6rK5TU3/Mya', 'qhpSGr38uP1Yi6f7vrZJlJhvNCmyK0tF9mVDa31aSxu30OGBJEbyMJ82KpU1', null, null, false, null);

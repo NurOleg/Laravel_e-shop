@@ -31,7 +31,7 @@ class Good extends Model
 
     public function skus()
     {
-        return $this->hasMany(Sku::class, 'article');
+        return $this->hasMany(Sku::class, 'article')->orderBy('price')->get();
     }
 
     public function images()

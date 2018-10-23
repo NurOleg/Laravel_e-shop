@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function()
     Route::get('goods/{good_article}', 'admin\GoodsController@edit');
 
     Route::get('orders', 'admin\OrderController@show');
+    Route::get('orders/{order_id}', 'admin\OrderController@edit');
 
 
     Route::get('dashboard', function() {

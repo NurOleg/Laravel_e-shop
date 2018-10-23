@@ -7624,6 +7624,38 @@ fieldset[disabled] .form-control {
         vertical-align: middle;
         width: 100%;
         padding: 10px 13px; }
+.add-plus {
+  color: #747474;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+  padding: 10px 13px; }
+.add-plus a:first-child{
+  border-bottom: 1px solid;
+}
+.sidebar .menu .list .add-plus:after, .sidebar .menu .list .add-plus:before {
+  position: absolute;
+  top: calc(50% - 33px)!important;
+  right: 17px;
+  font-size: 19px;
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sidebar .menu .list .add-plus:before {
+  content: '+';
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
         .sidebar .menu .list a:hover, .sidebar .menu .list a:active, .sidebar .menu .list a:focus {
           text-decoration: none !important; }
         .sidebar .menu .list a small {
