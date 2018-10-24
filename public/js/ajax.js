@@ -1,26 +1,27 @@
-window.ajaxCall = function (values, changed = false) {
-    var price_from = 0,
-        price_to = 0;
-    if (changed) {
-        price_from = Math.round(values[0]);
-        price_to = Math.round(values[1]);
-    }
-    var data = [];
-    data.push(price_from);
-    data.push(price_to);
-    console.log(values[0]);
+window.ajaxCall = function (filter, slug) {
+
+    var url = '/catalog/filter/' + slug;
+
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        type: 'post',
-        url: '/catalog/catalogFilter',
-        data: {
-            filter: {
-                data
-            }
-        },
+        type: 'POST',
+        dataType: 'json',
+        url: url,
+        data: {filter},
         success: function (request) {
+            var showButton = $('.show-me'),
+                catalogContainer = $('#catalog');
+            showButton.html('').html('Показать товары (' + request.total + ' шт.)');
+            showButton.show();
+            $('body').on('click', showButton, function(){
+                catalogContainer.html('').html(request.html);
+            });
+
+            console.log(request.total);
+        },
+        error: function (request) {
             console.log(request);
         }
     });
@@ -36,11 +37,11 @@ window.ajaxBasket = function (data, options, count = 1) {
         },
         type: 'POST',
         url: '/catalog/ajaxBasket',
-        dataType:"json",
+        dataType: 'json',
         data: {
-            data: { data },
-            options : { options },
-            count: { count }
+            data: {data},
+            options: {options},
+            count: {count}
         },
         success: function (request) {
             $('.header-icons-noti').html('').html(request.count);
@@ -60,15 +61,28 @@ window.ajaxOrder = function (data, options, count = 1) {
         },
         type: 'POST',
         url: '/catalog/ajaxBasket',
-        dataType:"json",
+        dataType: "json",
         data: {
-            data: { data },
-            options : { options },
-            count: { count }
+            data: {data},
+            options: {options},
+            count: {count}
         },
         success: function (request) {
             $('.header-icons-noti').html('').html(request.count);
             console.log(request);
         }
     });
+}
+
+window.getFilter = function () {
+    var filterBar = $('.leftbar select'),
+        filter = {};
+    if (filterBar.length > 0) {
+        filterBar.each(function (i, item) {
+            if ($(item).val() !== 'Не выбрано' && $(item).val() !== undefined) {
+                filter[$(item).attr('name')] = $(item).val();
+            }
+        });
+    }
+    return filter;
 }
