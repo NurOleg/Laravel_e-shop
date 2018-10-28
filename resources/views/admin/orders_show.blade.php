@@ -53,7 +53,7 @@
                             @foreach($orders as $order)
                                 <tr>
                                     <td>{{ $order->id }}</td>
-                                    <td><a href="orders/{{ $order->id }}">{{ $order->code }}</a></td>
+                                    <td><a href="orders/{{ $order->id }}/edit">{{ $order->code }}</a></td>
                                     <td>{{ $props['statuses'][$order->status] }}</td>
                                     <td>{{ $order->sum }}</td>
                                     <td>{{ $order->adress }}</td>

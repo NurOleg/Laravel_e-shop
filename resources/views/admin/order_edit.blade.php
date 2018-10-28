@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('specificCSS')
+    <link rel="stylesheet" href="{{ asset('adminpanel/plugins/bootstrap-select/css/bootstrap-select.css') }}">
+@endsection
 @section('content')
 
     {{--<div class="block-header">--}}
@@ -32,15 +35,21 @@
                     <form id="wizard_horizontal">
                         <h2>Информация о доставке</h2>
                         <section class="row">
-                            <div class="col-xs-12">
-                                <b>{{ $props['status'] }}</b>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" value="{{ $props['statuses'][$order->status] }}" class="form-control"
-                                               placeholder="{{ $props['status'] }}" disabled="disabled"/>
-                                    </div>
-                                </div>
-                                <br>
+                            <div class="col-xs-6">
+                                <p>
+                                    <b>{{ $props['status'] }}</b>
+                                </p>
+                                <select class="form-control show-tick">
+                                    @foreach($props['statuses'] as $code => $status)
+                                        <option value="{{ $code }}"
+                                                @if($code == $order->status) selected="selected" @endif>
+                                            {{ $status }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-6">
                                 <b>{{ $props['code'] }}</b>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -48,6 +57,9 @@
                                                placeholder="{{ $props['code'] }}" disabled="disabled"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-6">
                                 <b>Добавлен</b>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -55,6 +67,9 @@
                                                placeholder="Дата добавления"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-6">
                                 <b>Обновлен</b>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -62,6 +77,9 @@
                                                placeholder="Дата обновления"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-6">
                                 <b>{{ $props['sum'] }}</b>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -69,6 +87,9 @@
                                                placeholder="{{ $props['sum'] }}"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-6">
                                 <b>{{ $props['adress'] }}</b>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -303,6 +324,7 @@
     <script src="{{ asset('adminpanel/js/pages/ui/modals.js') }}"></script>
     <script src="{{ asset('adminpanel/js/pages/forms/editors.js') }}"></script>
     <script src="{{ asset('adminpanel/js/pages/cards/basic.js') }}"></script>
+    <script src="{{ asset('adminpanel/js/pages/forms/advanced-form-elements.js') }}"></script>
     <script>
         // $(document).ready(function () {
         //     $('.sku-edit').on('click', function (e) {

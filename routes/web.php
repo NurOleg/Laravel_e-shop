@@ -24,6 +24,7 @@ Route::get('/catalog', 'GoodsController@index');
 Route::post('/catalog/ajaxBasket', 'GoodsController@ajaxBasket');
 Route::get('/catalog/detail/{good_article}', 'GoodsController@detail');
 Route::get('/personal/cart', 'OrderController@index');
+Route::get('/personal/order/?order={order_code}', 'OrderController@show');
 Route::post('/personal/saveOrder', 'OrderController@saveOrder');
 
 
@@ -41,7 +42,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function()
     Route::get('goods/{good_article}', 'admin\GoodsController@edit');
 
     Route::get('orders', 'admin\OrderController@show');
-    Route::get('orders/{order_id}', 'admin\OrderController@edit');
+    Route::get('orders/{order_id}/edit', 'admin\OrderController@edit');
 
 
     Route::get('dashboard', function() {

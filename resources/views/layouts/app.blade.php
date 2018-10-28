@@ -33,6 +33,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/noui/nouislider.min.css') }}">
 
+    @yield('specificCSS')
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
@@ -492,33 +494,9 @@
 <!--===============================================================================================-->
 <script type="text/javascript" src="{{ asset('vendor/lightbox2/js/lightbox.min.js') }}"></script>
 <!--===============================================================================================-->
-<script type="text/javascript" src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/ajax.js') }}"></script>
-<script type="text/javascript">
-    $('.block2-btn-addcart').each(function () {
-        var name = $(this).attr('data-name'),
-            article = $(this).attr('data-article');
-        $(this).on('click', function () {
-            var data = {},
-                options = {};
-            data['article'] = article;
-            data['name'] = name;
-            options['size'] = 'large';
-            ajaxBasket(data, options);
 
-            // swal(nameProduct, "is added to cart !", "success");
-        });
-    });
-
-    $('.block2-btn-addwishlist').each(function () {
-        var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-        $(this).on('click', function () {
-            swal(nameProduct, "is added to wishlist !", "success");
-        });
-    });
-</script>
 @yield('specificJS')
-
 
 <!--===============================================================================================-->
 <script src="{{ asset('js/main.js') }}"></script>

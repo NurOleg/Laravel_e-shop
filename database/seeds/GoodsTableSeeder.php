@@ -41,8 +41,14 @@ class GoodsTableSeeder extends Seeder
         foreach ($data as $singleData) {
             $i++;
 
-            if (in_array($singleData->cat_id, $skip) || $singleData->count_goods == 0 || $singleData->price == 0) {
+            if (in_array($singleData->cat_id, $skip) || $singleData->count_goods == 0 || $singleData->price == 0 || $singleData->id == '10262') {
                 continue;
+            }
+
+            foreach (self::IMG_PATHS as $size => $path) {
+                Storage::disk('images')->put('goods/' . $size . '/' . $singleData->img_name, file_get_contents($path . $singleData->img_name));
+                $path = Storage::disk('images')->url('/goods/' . $size . '/' . $singleData->img_name);
+                $imgArr[$singleData->article][$size] = ['path' => $path, 'size' => $size];
             }
 
             $resGoods[$singleData->article] =
@@ -96,6 +102,17 @@ class GoodsTableSeeder extends Seeder
                     'price' => $infoSKU['price'],
                     'count' => $infoSKU['count'],
                     'size' => !is_null($infoSKU['size']) ? self::deleteDifferences($infoSKU['size']) : $infoSKU['size'],
+                ]);
+            }
+        }
+
+        foreach ($imgArr as $article => $imageArr) {
+            foreach ($imageArr as $image) {
+                DB::table('images')->insert([
+                    'src' => $image['path'],
+                    'entity' => Good::class,
+                    'size' => $image['size'],
+                    'element' => $article,
                 ]);
             }
         }

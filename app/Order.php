@@ -9,13 +9,15 @@ class Order extends Model
     const ORDER_STATUS_NEW = 'NEW';
     const ORDER_STATUS_ACCEPTED = 'ACCEPTED';
     const ORDER_STATUS_CLOSED = 'CLOSED';
+    const ORDER_STATUS_CANCELED = 'CANCELED';
     const ORDER_PROPERTIES = [
         'statuses' => [
             self::ORDER_STATUS_NEW => 'Новый',
             self::ORDER_STATUS_ACCEPTED => 'Принятый',
             self::ORDER_STATUS_CLOSED => 'Завершенный',
+            self::ORDER_STATUS_CANCELED => 'Отмененный',
         ],
-        'sum' => 'Сумма заказа',
+        'sum' => 'Сумма заказа, руб.',
         'basket' => 'Корзина',
         'code' => 'Номер заказа',
         'status' => 'Статус заказа',

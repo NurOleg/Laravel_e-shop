@@ -142,6 +142,13 @@ class GoodsController extends Controller
             asort($filter[$filterParam]);
         }
 
+        $json = [];
+
+        foreach ($goods as $good)
+        {
+            $json[$good->article] = $good;
+        }
+
         // ?????? -------------
 //        }
 
@@ -152,7 +159,8 @@ class GoodsController extends Controller
                 'goods' => $goods,
                 'filter' => $filter,
                 'props' => array_merge(Good::PROPERTIES_NAMES, Sku::PROPERTIES_NAMES),
-                'slug' => $category_slug
+                'slug' => $category_slug,
+                'json' => json_encode($json)
             ]);
         } else {
             $resultHtml = view('catalog_ajax',
@@ -245,6 +253,7 @@ class GoodsController extends Controller
         $name = $request->get('data')['data']['name'];
         $options = $request->get('options')['options'];
         $count = $request->get('count')['count'];
+        $price = $request->get('price');
 
         $ip = \Request::ip();
         if (Redis::get('cart:' . $ip . ':content')) {
@@ -257,7 +266,7 @@ class GoodsController extends Controller
             }
 
         }
-        \Cart::session($ip)->add($article, $name, 1500, (int)$count, $options);
+        \Cart::session($ip)->add($article, $name, (int)$price, (int)$count, $options);
 
         Redis::set('cart:' . $ip . ':content', \Cart::session($ip)->getContent());
         Redis::set('cart:' . $ip . ':total', \Cart::session($ip)->getTotal());

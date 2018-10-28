@@ -21,7 +21,7 @@ class OrderController extends Controller
         $order['payment'] = $order->payment();
         $order['user'] = $order->user();
         $order['cart'] = unserialize($order->basketJson()[0]->content);
-
+        dd($order['cart']);
         return view('admin.order_edit', ['order' => $order, 'props' => Order::ORDER_PROPERTIES]);
     }
 

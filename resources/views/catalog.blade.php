@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('specificCSS')
+    <link rel="stylesheet" href="{{ asset('css/sweetalert2.css') }}">
+@endsection
 @section('content')
 
     <section id="catalog">
@@ -69,7 +72,8 @@
                             @endforeach
                             <div class="size15 m-t-25">
                                 <!-- Button -->
-                                <button class="show-me flex-c-m size15 bg7 bo-rad-15 hov1 s-text14 trans-0-4" style="display: none">
+                                <button class="show-me flex-c-m size15 bg7 bo-rad-15 hov1 s-text14 trans-0-4"
+                                        style="display: none">
                                     Фильтровать
                                 </button>
                             </div>
@@ -253,7 +257,7 @@
                                                 <div class="block2-btn-addcart w-size1 trans-0-4"
                                                      data-name="{{ $good->name }}" data-article="{{ $good->article }}">
                                                     <!-- Button -->
-                                                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 @if ($good->skus->count() > 1) hasMany @endif ">
                                                         В корзину
                                                     </button>
                                                 </div>
@@ -268,7 +272,7 @@
                                             <span class="block2-price m-text6 p-r-5">
                                             @if ($good->skus->count() === 1)
                                                     @foreach($good->skus as $sku)
-                                                        {{ $sku->price }} ₽
+                                                        <span>{{ $sku->price }}</span> ₽
                                                     @endforeach
                                                 @else
                                                     @foreach($good->skus as $sku)
@@ -338,4 +342,9 @@
             ajaxCall(filter, slug);
         });
     </script>
+    <script>
+        var json = {!! $json !!};
+    </script>
+    <script type="text/javascript" src="{{ asset('vendor/sweetalert/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert-custom.js') }}"></script>
 @endsection

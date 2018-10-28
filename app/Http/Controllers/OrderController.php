@@ -119,4 +119,19 @@ class OrderController extends Controller
         }
 
     }
+
+    public function show(string $order_code)
+    {
+       $order = Order::where([['code', $order_code], ['user_id', Auth::user()->id]])->firstOrFail();
+
+       $order['basket'] = $order->basket();
+       $order['delivery'] = $order->delivery();
+       $order['user'] = $order->user();
+       $order['payment'] = $order->payment();
+
+        return view('order',
+            [
+                $order => $order,
+            ]);
+    }
 }
