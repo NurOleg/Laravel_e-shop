@@ -1,12 +1,3 @@
-<!--  -->
-<div class="flex-sb-m flex-w p-b-35">
-
-                    <span class="s-text8 p-t-5 p-b-5">
-							Показаны 1–12 из {{$goods->total()}} элементов
-						</span>
-</div>
-
-<!-- Product -->
 <div class="row">
     @foreach($goods as $good)
         <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">

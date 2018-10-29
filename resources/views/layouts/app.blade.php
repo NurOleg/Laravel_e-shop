@@ -96,7 +96,7 @@
 
                 <span class="linedivide1"></span>
 
-                @include('partials.header_cart')
+                {{--@include('partials.header_cart')--}}
             </div>
         </div>
     </div>

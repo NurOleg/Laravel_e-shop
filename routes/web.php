@@ -11,18 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index');
 
-Route::get('/articles/{article_id}', 'ArticlesController@show');
+Route::get('/catalog/{category_slug}/{child_category_slug}/{subchild_category_slug}/{good_article}', 'GoodsController@detail');
+Route::match(['post', 'get'], '/catalog/{category_slug?}', 'GoodsController@index');
 Route::get('/contacts', 'ContactsController@index');
-//Route::get('/catalog/delete', 'GoodsController@delete');
-Route::get('/catalog/{category_slug?}', 'GoodsController@index');
-Route::post('/catalog/filter/{category_slug?}', 'GoodsController@index');
 Route::get('/catalog', 'GoodsController@index');
 Route::post('/catalog/ajaxBasket', 'GoodsController@ajaxBasket');
-Route::get('/catalog/detail/{good_article}', 'GoodsController@detail');
 Route::get('/personal/cart', 'OrderController@index');
 Route::get('/personal/order/?order={order_code}', 'OrderController@show');
 Route::post('/personal/saveOrder', 'OrderController@saveOrder');

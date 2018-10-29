@@ -2,40 +2,60 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Cache,
-    App\Category;
+use App\Category;
+use Kalnoy\Nestedset\Collection;
 
 class CategoryService
 {
+
     /**
      * @param string $slug
-     * @param array $categories
-     * @return array
+     * @return array $categories
      */
-    public function getCategoriesBySlug(string $slug, $categories = [])
+    public function getCatalogCategoriesForFilter(string $slug = '')
     {
-        if (!Cache::has('categories_' . $slug)) {
-            if (!empty($slug)) {
-                $categoryCurrent = Category::where('category_slug', $slug)->limit(1)->get();
-                $title = $categoryCurrent[0]->name;
-                $categoriesChildListForGoods = Category::descendantsOf($categoryCurrent[0]->id);
-                $categoriesChildListForTree = Category::where('parent_id', $categoryCurrent[0]->id)->where('active', 1)->orderBy('synch_id')->get();
-
-                if ($categoriesChildListForGoods->count() !== 0) {
-                    $childIds = [];
-                    foreach ($categoriesChildListForGoods as $childCategory) {
-                        $childIds[] = $childCategory->id;
-                    }
-                } else {
-                    $goods = Good::where('active', 1)->where('category_id', $categoryCurrent[0]->id)->paginate(20);
-                }
-            } else {
-                $categoriesChildListForTree = Category::where('parent_id', null)->where('active', 1)->orderBy('synch_id')->get();
+        $categories = [];
+        if ($slug !== '') {
+            $currentCategory = Category::where([['category_slug', $slug], ['active', 1]])->limit(1)->get();
+            $categoriesByParent = Category::defaultOrder()->descendantsOf($currentCategory[0]->id);
+            foreach ($categoriesByParent as $category) {
+                $categories[] = $category->id;
             }
-
         }
-
-        $categories = Cache::get('categories_' . $slug)
         return $categories;
     }
+
+    /**
+     * @param string $slug
+     * @return Collection
+     */
+    public function getCatalogCategories(string $slug = '')
+    {
+        if ($slug === '') {
+            $categoriesTree = Category::where([['parent_id', null], ['active', 1]])->get();
+        } else {
+            $currentCategory = Category::where([['category_slug', $slug], ['active', 1]])->limit(1)->get();
+            $categoriesTree = Category::where('active', 1)->descendants($currentCategory[0]->id);
+        }
+        return $categoriesTree;
+    }
+
+    /**
+     * @param int $categoryId
+     * @param string $itemSlug
+     * @param string $section
+     * @return string
+     */
+    public function makeItemUrl(int $categoryId, string $itemSlug = '', string $section = '')
+    {
+        $url = '/' . $section . '/';
+        $categories = Category::defaultOrder()->ancestorsAndSelf($categoryId);
+
+        foreach ($categories as $category) {
+            $url .= $category->category_slug . '/';
+        }
+
+        return $url . $itemSlug;
+    }
+
 }

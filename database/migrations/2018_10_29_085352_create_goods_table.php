@@ -15,17 +15,18 @@ class CreateGoodsTable extends Migration
     {
         Schema::create('goods', function (Blueprint $table) {
             $table->string('article')->primary();
-//            $table->increments('id');
             $table->unsignedInteger('api_id');
             $table->string('name');
             $table->boolean('active')->default(1);
+            $table->boolean('sales')->default(0);
+            $table->boolean('hits')->default(0);
+            $table->boolean('featured')->default(0);
             $table->unsignedInteger('category_id');
             $table->string('brand')->nullable();
             $table->string('base_color')->nullable();
             $table->string('filler')->nullable();
             $table->string('textile')->nullable();
             $table->string('count_color')->nullable();
-//            $table->foreign('article')->references('article')->on('sku');
             $table->timestamps();
         });
     }

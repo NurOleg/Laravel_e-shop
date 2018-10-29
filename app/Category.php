@@ -11,4 +11,8 @@ class Category extends Model
 
     protected $table = 'categories';
 
+    public function getOnMainItems($limit = 6)
+    {
+        return Category::where('main', 1)->limit($limit)->get();
+    }
 }

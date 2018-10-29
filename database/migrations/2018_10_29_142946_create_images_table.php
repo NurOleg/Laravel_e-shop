@@ -17,7 +17,8 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->string('src');
             $table->string('entity');
-            $table->string('element')->references('article')->on('goods');
+            $table->string('element');
+            $table->foreign('element')->references('article')->on('goods')->onDelete('cascade');
             $table->string('size');
             $table->timestamps();
         });

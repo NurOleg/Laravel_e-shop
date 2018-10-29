@@ -79,7 +79,7 @@ class GoodsTableSeeder extends Seeder
 
         foreach ($resGoods as $article => $info) {
             DB::table('goods')->insert([
-                'article' => $article,
+                'article' => str_replace(' ', '', $article),
                 'name' => $info['name'],
                 'api_id' => $info['api_id'],
                 'brand' => $info['brand'],
@@ -94,7 +94,7 @@ class GoodsTableSeeder extends Seeder
         foreach ($resSKU as $article => $infoSKUarr) {
             foreach ($infoSKUarr as $infoSKU) {
                 DB::table('sku')->insert([
-                    'article' => $article,
+                    'article' => str_replace(' ', '', $article),
                     'duvet' => !is_null($infoSKU['duvet']) ? self::deleteDifferences($infoSKU['duvet']) : $infoSKU['duvet'],
                     'api_id' => $infoSKU['api_id'],
                     'pillowcase' => !is_null($infoSKU['duvet']) ? self::deleteDifferences($infoSKU['pillowcase']) : $infoSKU['pillowcase'],

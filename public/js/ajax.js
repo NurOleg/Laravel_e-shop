@@ -1,7 +1,11 @@
-window.ajaxCall = function (filter, slug) {
+window.ajaxCall = function (filter, slug, page) {
 
-    var url = '/catalog/filter/' + slug;
+    var url = '/catalog/' + slug;
 
+    localStorage.setItem('filter', JSON.stringify(filter));
+
+    var itemFilter = JSON.parse(localStorage.getItem('filter'));
+    console.log(page);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -9,17 +13,15 @@ window.ajaxCall = function (filter, slug) {
         type: 'POST',
         dataType: 'json',
         url: url,
-        data: {filter},
+        data: {
+            'filter': itemFilter,
+            'page': page
+        },
         success: function (request) {
-            var showButton = $('.show-me'),
-                catalogContainer = $('#catalog');
-            showButton.html('').html('Показать товары (' + request.total + ' шт.)');
-            showButton.show();
-            $('body').on('click', showButton, function () {
-                catalogContainer.html('').html(request.html);
-            });
+            var catalogContainer = $('#catalog');
+            catalogContainer.html('').html(request.html);
+            $('html,body').animate({scrollTop: catalogContainer.offset().top}, 'slow');
 
-            console.log(request.total);
         },
         error: function (request) {
             console.log(request);
@@ -50,7 +52,7 @@ window.ajaxBasket = function (data, options, price, count = 1) {
                 $('.header-cart-total span').html('').html(request.total);
                 swal({
                     type: 'success',
-                    title: 'Товар ' + data['name'] + sizeHtml +' добавлен в корзину',
+                    title: 'Товар ' + data['name'] + sizeHtml + ' добавлен в корзину',
                     // html: 'Вы выбрали: ' + size,
                     buttonsStyling: false,
                     showCloseButton: true,
