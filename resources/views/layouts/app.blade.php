@@ -78,8 +78,8 @@
 
         <div class="wrap_header">
             <!-- Logo -->
-            <a href="index.html" class="logo">
-                CASA FLOWER
+            <a href="/" class="logo">
+                Ловец снов
                 {{--<img src="images/icons/logo.png" alt="IMG-LOGO">--}}
             </a>
 
@@ -96,7 +96,7 @@
 
                 <span class="linedivide1"></span>
 
-                {{--@include('partials.header_cart')--}}
+                @include('partials.header_cart')
             </div>
         </div>
     </div>

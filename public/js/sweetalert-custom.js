@@ -1,9 +1,9 @@
 /*[ SweetAlert add to cart]
  ===========================================================*/
-$('.block2-btn-addcart').each(function () {
-    var thisProduct = $(this);
+// $('body').each($('.block2-btn-addcart'), function () {
 
-    thisProduct.on('click', function () {
+$('body').on('click', '.block2-btn-addcart', function () {
+        var thisProduct = $(this);
         var data = {},
             options = {},
             obj = {},
@@ -62,7 +62,7 @@ $('.block2-btn-addcart').each(function () {
             ajaxBasket(data, options, price);
         }
     });
-});
+// });
 
 /*[ SweetAlert add to wishlist]
  ===========================================================*/

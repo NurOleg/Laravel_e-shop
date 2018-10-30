@@ -156,8 +156,9 @@ class GoodsController extends Controller
                 ['categoriesTree' => $categoriesTree,
                     'goods' => $goods,
                     'filter' => $filter,
-                    'props' => array_merge(Good::PROPERTIES_NAMES, Sku::PROPERTIES_NAMES),
-                    'slug' => $category_slug
+                    'props' => array_merge($goodsFilterProps, $goodsFilterProps),
+                    'slug' => $category_slug,
+                    'json' => json_encode($json)
                 ])->render();
 
             return response()->json(['result' => 'success', 'html' => $resultHtml, 'total' => $goods->total()]);

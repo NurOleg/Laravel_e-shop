@@ -39,7 +39,7 @@ class ComposerServiceProvider extends ServiceProvider
             $count = Redis::get('cart:' . $ip . ':count');
             $total = Redis::get('cart:' . $ip . ':total');
 
-            $view->cart = $cart;
+            $view->cart = (!is_null($cart)) ? $cart : [];
             $view->total = $total;
             $view->count = $count;
 

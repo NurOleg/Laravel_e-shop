@@ -26,7 +26,7 @@
                         <div class="block2-btn-addcart w-size1 trans-0-4"
                              data-name="{{ $good->name }}" data-article="{{ $good->article }}">
                             <!-- Button -->
-                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 @if ($good->skus->count() > 1) hasMany @endif ">
                                 В корзину
                             </button>
                         </div>
@@ -65,3 +65,6 @@
     <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
     <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
 </div>
+    <script>
+        var json = {!! $json !!};
+    </script>

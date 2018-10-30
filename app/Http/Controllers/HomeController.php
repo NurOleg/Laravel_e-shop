@@ -6,6 +6,7 @@ use App\Good,
     App\Sku,
     App\Services\CategoryService,
     Illuminate\Support\Facades\Cache,
+    Illuminate\Support\Facades\Redis,
     Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -54,7 +55,7 @@ class HomeController extends Controller
 
             $expiresAt = now()->addDays(7);
 
-            Cache::add('home', $dataToCache, $expiresAt);
+            Cache::put('home', $dataToCache, $expiresAt);
         }
         $data = Cache::get('home');
 
